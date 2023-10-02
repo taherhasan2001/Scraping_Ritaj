@@ -50,10 +50,15 @@ def read_from_txt():
 
             if not line:
                 continue
-            # print(line)
+
             # Check if the line contains a course name
             if flagError and line.split('\t')[0].isalpha():
+
                 sections[len(sections) - 1]['days'] += ', ' + line.split('\t')[0]
+            elif flagError and line.split('\t')[0][0].isalpha():
+
+                for day in line.split("\t")[0].replace(" ","").split(','):
+                    sections[len(sections) - 1]['days'] += ', ' + day
             elif flagError and line.split('\t')[0][0].isnumeric():
                 sections[len(sections) - 1]['time'] = line.split('\t')[0]
                 sections[len(sections) - 1]['place'] = "N/A"
@@ -61,7 +66,6 @@ def read_from_txt():
             if any(line.startswith(course_name) for course_name in courses_names):
                 current_section['name of course'] = line.split()[0]
                 subCourseName = line.split()[0]
-                # print(current_section['name of course'])
                 read_course_name = True
                 continue
 
@@ -72,11 +76,10 @@ def read_from_txt():
 
             # Check if the line contains section information
 
-            # print(match)
             if line.split('\t')[0] == 'Lab':
                 subCourseName = True
                 current_section['sec'] = int(line.split('\t')[1])
-                # print(match.group(1))
+
                 current_section['name of instructor'] = line.split('\t')[2]
                 current_section['number of students'] = line.split('\t')[3]
                 jumpToNextLine = True
@@ -84,7 +87,7 @@ def read_from_txt():
             if line.split('\t')[0] == 'Discussion':
                 subCourseName = True
                 current_section['sec'] = int(line.split('\t')[1])
-                # print(match.group(1))
+
                 current_section['name of instructor'] = line.split('\t')[2]
                 current_section['number of students'] = line.split('\t')[3]
                 jumpToNextLine = True
@@ -92,7 +95,7 @@ def read_from_txt():
             if line.split('\t')[0] == 'Lecture':
                 subCourseName = False
                 current_section['sec'] = int(line.split('\t')[1])
-                # print(match.group(1))
+
                 current_section['name of instructor'] = line.split('\t')[2]
                 current_section['number of students'] = line.split('\t')[3]
                 jumpToNextLine = True
@@ -105,16 +108,15 @@ def read_from_txt():
                     current_section['time'] = line.split('\t')[1]
                 except:
                     flagError = True
+
                     sections.append(current_section.copy())
                 if not flagError:
                     current_section['place'] = line.split('\t')[2]
                     if subCourseName:
                         current_section['name of course'] = 'sub'+current_section['name of course'].replace('sub', '')
                     sections.append(current_section.copy())
-                    print(current_section)
-                    # print(sections)
-                jumpToNextLine = False
 
+                jumpToNextLine = False
 
 def close_current_tab():
     # Close the current tab using keyboard shortcuts (e.g., Ctrl+W)
