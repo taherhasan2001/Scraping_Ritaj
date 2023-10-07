@@ -126,12 +126,10 @@ def close_current_tab():
 def get_data(url):
     webbrowser.open(url)
     time.sleep(delay)  # Adjust the sleep time as needed to allow the page to fully load
-
     pyautogui.hotkey('ctrl', 'a')  # Select all
     pyautogui.hotkey('ctrl', 'c')  # Copy
     time.sleep(2)
     copied_text = clipboard.paste()
-
     with open(f"BZU.txt", "w", encoding="utf-8") as file:
         file.write(copied_text)
     time.sleep(2)
@@ -140,7 +138,7 @@ def get_data(url):
 
 
 if __name__ == '__main__':
-    for link in links:
-        get_data( f"https://ritaj.birzeit.edu/hemis/courses?mode=CB&term=1231&lang=en&bu={link}&study_lang=")
+
+    get_data( "https://ritaj.birzeit.edu/hemis/courses?term=1231&bu=182&lang=en&mode=CB")
 
     write_to_json()
