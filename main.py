@@ -4,8 +4,7 @@ import pyautogui
 import clipboard
 import json
 
-links = [103,113,138,174,212,664,2186,7253,10568]
-delay = 5  # In seconds
+delay = 10  # In seconds
 sections = []
 courses_names = ["PUBA","ANTH",
 "ACCT","ACFI","ARAB","ARCH","ARTS","BIOC","BIOL","BUSA",
