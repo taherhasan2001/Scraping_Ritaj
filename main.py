@@ -122,23 +122,65 @@ def close_current_tab():
     pyautogui.hotkey('ctrl', 'w')
 
 
-def get_data(url):
+import webbrowser
+import time
+import pyautogui
+import clipboard
+import json
+
+
+def get_data(url, delay=5):
+    # Open the URL in a web browser
     webbrowser.open(url)
-    time.sleep(delay)  # Adjust the sleep time as needed to allow the page to fully load
+
+    # Adjust the sleep time as needed to allow the page to fully load
+    time.sleep(delay)
+    # Get the screen width and height
+    screen_width, screen_height = pyautogui.size()
+
+    # Calculate the coordinates for the middle of the screen
+    middle_x = screen_width // 2
+    middle_y = screen_height // 2
+
+    # Move the mouse to the middle of the screen
+    pyautogui.moveTo(middle_x, middle_y)
+
+    # Perform a mouse click (left-click) at the current mouse position (middle of the screen)
+    pyautogui.click()
+
+
+    # Use PyAutoGUI to simulate keyboard shortcuts for copying
     pyautogui.hotkey('ctrl', 'a')  # Select all
     pyautogui.hotkey('ctrl', 'c')  # Copy
-    time.sleep(2)
+
+    # Close the current tab (You need to implement this function)
+    # close_current_tab()
+
+    # Add a delay before attempting to paste from clipboard
+    time.sleep(10)
+
+    # Retrieve the copied text from the clipboard
     copied_text = clipboard.paste()
-    with open(f"BZU.txt", "w", encoding="utf-8") as file:
+
+    # Print the copied text (for debugging)
+
+    # Add another delay before writing to a file
+    time.sleep(3)
+
+    # Save the copied text to a file
+    with open("BZU.txt", "w", encoding="utf-8") as file:
         file.write(copied_text)
-    time.sleep(2)
-    close_current_tab()
+
+    # Call your read_from_txt() function here if needed
     read_from_txt()
+    close_current_tab()
 
 
+# Example usage:
+#
 if __name__ == '__main__':
 
-    get_data( "https://ritaj.birzeit.edu/hemis/courses?term=1231&bu=182&lang=en&mode=CB")
+    get_data( "https://ritaj.birzeit.edu/hemis/courses?mode=CB&term=1231&lang=en&bu=182&study_lang=")
 
     write_to_json()
     input(f"Number of sections: {len(sections)}\nPress Enter to exit...")
