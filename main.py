@@ -142,3 +142,4 @@ if __name__ == '__main__':
     get_data( "https://ritaj.birzeit.edu/hemis/courses?term=1231&bu=182&lang=en&mode=CB")
 
     write_to_json()
+    input(f"Number of sections: {len(sections)}\nPress Enter to exit...")
