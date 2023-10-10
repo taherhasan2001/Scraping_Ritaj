@@ -3,6 +3,7 @@ import time
 import pyautogui
 import clipboard
 import json
+import os
 
 delay = 10  # In seconds
 sections = []
@@ -122,11 +123,7 @@ def close_current_tab():
     pyautogui.hotkey('ctrl', 'w')
 
 
-import webbrowser
-import time
-import pyautogui
-import clipboard
-import json
+
 
 
 def get_data(url, delay=5):
@@ -171,16 +168,28 @@ def get_data(url, delay=5):
     with open("BZU.txt", "w", encoding="utf-8") as file:
         file.write(copied_text)
 
-    # Call your read_from_txt() function here if needed
     read_from_txt()
     close_current_tab()
 
+# function that read from file "link_here.txt" and read the first line as link
+def read_link():
+    with open("link_here.txt", "r") as file:
+        link = file.readline()
+    return link
 
-# Example usage:
-#
+# function to delete file "BZU.txt"
+def remove_file(filename):
+    try:
+        os.remove(filename)
+    except FileNotFoundError:
+        print(f"{filename} ERROR with removing this file 'contact with Taher Hasan'.")
+    except Exception as e:
+        print(f"An error occurred: {str(e)}")
+
 if __name__ == '__main__':
 
-    get_data( "https://ritaj.birzeit.edu/hemis/courses?mode=CB&term=1231&lang=en&bu=182&study_lang=")
+    get_data( read_link())
 
     write_to_json()
+    remove_file("BZU.txt")
     input(f"Number of sections: {len(sections)}\nPress Enter to exit...")
